@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Científica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .calculator.active {
+            display: flex;
+        }
+        .calculator input {
+            width: 200px;
+            height: 40px;
+            margin-bottom: 10px;
+            text-align: right;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .calculator button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator .row {
+            display: flex;
+        }
+        .calculator .row button {
+            flex: 1;
+        }
+        .calculator .operator {
+            background-color: #f9a825;
+            color: #fff;
+        }
+        .calculator .function {
+            background-color: #29b6f6;
+            color: #fff;
+        }
+        .calculator .equals {
+            background-color: #66bb6a;
+            color: #fff;
+        }
+        .calculator .clear {
+            background-color: #ef5350;
+            color: #fff;
+        }
+        .code-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>👋 Hola Usuario, ¿qué operación haremos el día de hoy?</h1>
+    <button id="toggleButton" onclick="toggleCalculator()">Encender</button>
+    <div class="calculator" id="calculator">
+        <input type="text" id="display" disabled>
+        <div class="row">
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            <button class="function" onclick="appendToDisplay('sin(')">sin</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('*')">*</button>
+            <button class="function" onclick="appendToDisplay('cos(')">cos</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            <button class="function" onclick="appendToDisplay('tan(')">tan</button>
+        </div>
+        <div class="row">
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button class="function" onclick="appendToDisplay('log(')">log</button>
+        </div>
+        <div class="row">
+            <button class="function" onclick="appendToDisplay('sqrt(')">√</button>
+            <button class="function" onclick="appendToDisplay('ln(')">ln</button>
+            <button class="function" onclick="appendToDisplay('^')">^</button>
+            <button class="function" onclick="appendToDisplay('(')">(</button>
+            <button class="function" onclick="appendToDisplay(')')">)</button>
+        </div>
+        <div class="row">
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <div class="code-container">
+        <h2>Código HTML:</h2>
+        <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Calculadora Científica&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .calculator.active {
+            display: flex;
+        }
+        .calculator input {
+            width: 200px;
+            height: 40px;
+            margin-bottom: 10px;
+            text-align: right;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .calculator button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator .row {
+            display: flex;
+        }
+        .calculator .row button {
+            flex: 1;
+        }
+        .calculator .operator {
+            background-color: #f9a825;
+            color: #fff;
+        }
+        .calculator .function {
+            background-color: #29b6f6;
+            color: #fff;
+        }
+        .calculator .equals {
+            background-color: #66bb6a;
+            color: #fff;
+        }
+        .calculator .clear {
+            background-color: #ef5350;
+            color: #fff;
+        }
+        .code-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;👋 Hola Usuario, ¿qué operación haremos el día de hoy?&lt;/h1&gt;
+    &lt;button id="toggleButton" onclick="toggleCalculator()"&gt;Encender&lt;/button&gt;
+    &lt;div class="calculator" id="calculator"&gt;
+        &lt;input type="text" id="display" disabled&gt;
+        &lt;div class="row"&gt;
+            &lt;button onclick="appendToDisplay('7')"&gt;7&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('8')"&gt;8&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('9')"&gt;9&lt;/button&gt;
+            &lt;button class="operator" onclick="appendToDisplay('/')"&gt;/&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('sin(')"&gt;sin&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+            &lt;button onclick="appendToDisplay('4')"&gt;4&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('5')"&gt;5&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('6')"&gt;6&lt;/button&gt;
+            &lt;button class="operator" onclick="appendToDisplay('*')"&gt;*&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('cos(')"&gt;cos&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+            &lt;button onclick="appendToDisplay('1')"&gt;1&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('2')"&gt;2&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('3')"&gt;3&lt;/button&gt;
+            &lt;button class="operator" onclick="appendToDisplay('-')"&gt;-&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('tan(')"&gt;tan&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+            &lt;button onclick="appendToDisplay('0')"&gt;0&lt;/button&gt;
+            &lt;button onclick="appendToDisplay('.')"&gt;.&lt;/button&gt;
+            &lt;button class="clear" onclick="clearDisplay()"&gt;C&lt;/button&gt;
+            &lt;button class="operator" onclick="appendToDisplay('+')"&gt;+&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('log(')"&gt;log&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+            &lt;button class="function" onclick="appendToDisplay('sqrt(')"&gt;√&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('ln(')"&gt;ln&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('^')"&gt;^&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay('(')"&gt;(&lt;/button&gt;
+            &lt;button class="function" onclick="appendToDisplay(')')"&gt;)&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+            &lt;button class="equals" onclick="calculate()"&gt;=&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="code-container"&gt;
+        &lt;h2&gt;Código HTML:&lt;/h2&gt;
+        &lt;pre&gt;
+        </pre>
+        <h2>Código JavaScript:</h2>
+        <pre>
+function toggleCalculator() {
+    const calculator = document.getElementById('calculator');
+    const toggleButton = document.getElementById('toggleButton');
+    if (calculator.classList.contains('active')) {
+        calculator.classList.remove('active');
+        toggleButton.textContent = 'Encender';
+    } else {
+        calculator.classList.add('active');
+        toggleButton.textContent = 'Apagar';
+    }
+}
+
+function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    display.value += value;
+}
+
+function clearDisplay() {
+    const display = document.getElementById('display');
+    display.value = '';
+}
+
+function calculate() {
+    const display = document.getElementById('display');
+    try {
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = 'Error';
+    }
+}
+        </pre>
+    </div>
+&lt;/body&gt;
+&lt;/html&gt;
+    </pre>
+    </div>
+    <script>
+        function toggleCalculator() {
+            const calculator = document.getElementById('calculator');
+            const toggleButton = document.getElementById('toggleButton');
+            if (calculator.classList.contains('active')) {
+                calculator.classList.remove('active');
+                toggleButton.textContent = 'Encender';
+            } else {
+                calculator.classList.add('active');
+                toggleButton.textContent = 'Apagar';
+            }
+        }
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            const display = document.getElementById('display');
+            display.value = '';
+        }
+
+        function calculate() {
+            const display = document.getElementById('display');
+            try {
+                display.value = eval(display.value);
+            } catch (e) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
